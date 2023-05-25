@@ -10,8 +10,9 @@ class MyLinearRegression():
     My personnal linear regression class to fit like a boss.
     """
 
-    def __init__(self, thetas=np.array([[0], [0]]), alpha=.001, max_iter=60000):
-        self.alpha = alpha
+    def __init__(self, thetas=np.array([[0], [0]]), alpha1=0.01, alpha2=0.0000000001, max_iter=10000):
+        self.alpha1 = alpha1
+        self.alpha2 = alpha2
         self.max_iter = max_iter
         self.thetas = thetas
 
@@ -30,16 +31,17 @@ class MyLinearRegression():
             return None
         m, _ = x.shape
         i = 0
-        losses = []
+        theta0 = self.thetas[0][0]
+        theta1 = self.thetas[1][0]
+        
         while i < self.max_iter:
             X = np.insert(x, 0, np.array([1]), axis=1)
-            j = (1 / m) * np.dot(X.transpose(), (np.dot(X, self.thetas) - y))
-            print(j)
-            if i > 50:
-                exit(1)
-            self.thetas = self.thetas - self.alpha * j
-            losses.append(self.loss_(y, self.predict_(x)))
+            grad = (1 / m) * np.dot(X.transpose(), (np.dot(X, self.thetas) - y))
+            theta0 = theta0 - self.alpha1 * grad[0][0]
+            theta1 = theta1 - self.alpha2 * grad[1][0]
+            self.thetas = np.array([[theta0], [theta1]])
             i += 1
+            
         return self.thetas
 
     def mse_(self, y, y_hat):
