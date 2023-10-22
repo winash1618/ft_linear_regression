@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import sys
-from prediction import predict_
+from prediction import prediction
 
 def fit_(x, y):
     """Fits the model to the training dataset contained in x and y.
@@ -38,15 +38,13 @@ def main() -> None:
         This function is made to shorten the length of __name__ == "__main__" condition
     """
     if len(sys.argv[1:]) == 0:
-        num2 = float(input("Enter the mileage of the Car you want to buy: "))
+        mileage = float(input("Enter the mileage of the Car you want to buy: "))
         data = pd.read_csv('data.csv')
         x = np.array(data['km']).reshape(-1, 1)
         y = np.array(data['price']).reshape(-1, 1)
         print (x, y)
         theta = fit_(x, y)
-        print("theta0 = ", theta[0][0])
-        print("theta1 = ", theta[1][0])
-        print("Estimated price: ", theta[0][0] + theta[1][0] * num2)
+        prediction(mileage, theta)
     else:
         print("Usage: ./python3 MyLinearRegression.py")
 

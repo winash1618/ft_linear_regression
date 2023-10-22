@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
 import sys
-from prediction import predict_
-from training import fit_
 from sklearn.metrics import mean_squared_error
+from prediction import y_hat_
+from training import fit_
 
 def loss_elem_(y, y_hat):
     """_summary_
@@ -26,7 +26,7 @@ def loss_(y, y_hat):
     if y.shape != y_hat.shape:
         return None
     loss = loss_elem_(y, y_hat)
-    return np.sum(loss) / (2 * len(loss))
+    return np.sum(loss) / len(loss)
 
 def main() -> None:
     """
@@ -38,7 +38,7 @@ def main() -> None:
         y = np.array(data['price']).reshape(-1, 1)
         print (x, y)
         theta = fit_(x, y)
-        y_hat = predict_(x, theta)
+        y_hat = y_hat_(x, theta)
         print("MSE: ", mean_squared_error(y, y_hat))
         print("My MSE: ", loss_(y, y_hat))
        

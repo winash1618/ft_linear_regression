@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from prediction import predict_
-from training import fit_
 import sys
+from prediction import y_hat_
+from training import fit_
 
 if len(sys.argv[1:]) == 0:
     data = pd.read_csv('data.csv')
@@ -11,7 +11,7 @@ if len(sys.argv[1:]) == 0:
     y = np.array(data['price']).reshape(-1, 1)
     print (x, y)
     theta = fit_(x, y)
-    y_hat = predict_(x, theta)
+    y_hat = y_hat_(x, theta)
     plt.scatter(x, y)
     plt.plot(x, y_hat, "r-")
     plt.show()
